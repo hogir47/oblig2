@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Kinobiletter</title>
+
+
+
+
+</head>
+<body>
+
+<h1 style=" color: olive">Bestilling av kinobiletter</h1><br>
+<div class="container">
+    <div class="row">
+        <div class=" col-xs-2 col-md-4">
+            <h1>Bestilling av kinobiletter</h1>
+            <form class="form">
+                <div class="form-group">
+                    <label for="film"><strong>Velg film:</strong></label>
+                    <select id="film" class="form-control form-control-sm">
+            <option value="" disabled selected hidden> Valg film her(f.eks film1....) </option>
+            <option>Film 1</option>
+            <option>Film 2</option>
+            <option>Film 3</option>
+            <option>Film 4</option>
+            <option>Film 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="antall"><strong>Antall </strong></label>
+                    <input type="text"  class="form-control form-control-sm"  id="antall" />
+                    <div class="text-danger" id="antallFeil"></div>
+                </div>
+                <div class="form-group">
+                    <label for="fornavn"><strong>Fornavn </strong></label>
+                    <input type="text" class="form-control form-control-sm" id="fornavn">
+                    <div class="text-danger" id="fornavnFeil"></div>
+                </div>
+                <div class="form-group">
+                    <label for="etternavn" ><strong>Etternavn </strong></label>
+                    <input type="text" class="form-control form-control-sm" id="etternavn">
+                    <div class="text-danger" id="etternavnFeil"></div>
+                </div>
+                <div class="form-group">
+                    <label for="telefonnr"><strong>Telefonnr</strong></label>
+                    <input type="text" class="form-control form-control-sm" id="telefonnr">
+                    <div class="text-danger" id="telefonnrFeil"></div>
+                </div>
+                <div class="form-group">
+                    <label for="epost"><strong>Epost </strong></label>
+                    <input type="text" class="form-control form-control-sm" id="epost">
+                    <div class="text-danger" id="epostFeil"></div>
+                </div>
+            </form>
+            <button type="button" class="btn btn-primary " onclick="reg()">kjøp billetet</button>
+        </div>
+        <div class="col-xs-4 col-md-8">
+            <h3>Alle billetter</h3>
+            <div id="alleBillettene"></div>
+            <button type="button" class="btn btn-outline-danger btn-sm" onclick="slettAlle()">slett alle billettene</button>
+        </div>
+    </div>
+</div>
+<script type="application/javascript">
+    function Kunde() {
+        $("#kjop").click(function() {
+
+            const film = $("#filmNavn").val();
+            const antall = $("#antall").val();
+            const fornavn =$("#fornavn").val();
+            const etternavn = $("#etternavn").val();
+            const telefonnr = $("#telefonnr").val();
+            const epost = $("#epost").val();
+
+            $("#feil1").html("");
+            $("#feil2").html("");
+            $("#feil3").html("");
+            $("#feil4").html("");
+            $("#feil5").html("");
+            $("#feil").html("");
+
+
+            
+
+                if (film === "") {
+                    $("#feil"), html("Velg film!".fontcolor("red"));
+                }
+                if (!antall.match(nummer1) && !(antall === "")) {
+                    $("#feil1").html(
+                        "Antall må være plus og ikke mer enn to siffere!".fontcolor("red"));
+
+                }
+                if (antall === "") {
+                    $("#feil1").html(
+                        "Dette må oppfylles".fontcolor("red"));
+                }
+                if (!fornavn.match(string) && !(fornavn === "")) {
+                    $("#feil2").html(
+                        "Fornavnet må ikke innholdet tall og må være mellom 2-20 bokstaver!"
+                            .fontcolor("red"));
+                }
+                if (fornavn === "") {
+                    $("#feil2").html(
+                        "Må skrives i dette feltet".fontcolor("red"));
+                }
+                if (!etternavn.match(string) && !(etternavn === "")) {
+                    $("#feil3").html(
+                        "Etternavn må ikke innholdet tall og må være mellom 2-20 bokstaver!"
+                            .fontcolor("red"));
+                }
+                if (etternavn === "") {
+                    $("#feil3").html(
+                        "Dette feltet må oppfylles!".fontcolor("red"));
+                }
+                if (!telefonnr.match(nummer) && !(telefonnr === "")) {
+                    $("#feil4").html(
+                        "Telefonnr må ikke innholdet bokstaver og må være 8 tall !".fontcolor("red"));
+                }
+                if (telefonnr === "") {
+                    $("#feil4").html(
+                        "Dette feltet må oppfylles".fontcolor("red"));
+                }
+                if (!epost.match(email) && !(epost === "")) {
+                    $("#feil5").html(
+                        "Epost må være i riktig form".fontcolor("red"));
+                }
+                if (epost === "") {
+                    $("#feil5").html(
+                        "Dette feltet må oppfylles!".fontcolor("red"));
+                }
+
+            else {
+                const list = {
+                    film: film,
+                    antall: antall,
+                    fornavn: fornavn,
+                    etternavn: etternavn,
+                    telefonnr: telefonnr,
+                    epost: epost,
+                };
+
+
+                liste.push(list);
+
+
+                let ut = "<table id='t1' style='width: 70%'><tr>" + "<th>Film</th><th>Antall</th>" +
+                    "<th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>";
+
+                for (let i of liste) {
+                    ut += "<tr><td>" + i.film + "</td>" + "<td>" + i.antall + "</td>" + "<td>" +
+                        i.fornavn + "</td>" + "<td>" + i.etternavn + "</td>" + "<td>" + i.telefonnr +
+                        "</td>" + "<td>" + i.epost + "</td>";
+                }
+
+
+                $("#resultat").html(ut);
+                $("#filmNavn").val("");
+                $("#antall").val("");
+                $("#fornavn").val("");
+                $("#etternavn").val("");
+                $("#telefonnr").val("");
+                $("#epost").val("");
+
+            }
+
+        })
+
+        function slett() {
+            liste = [];
+            $("#resultat").html("");
+
+        }
+
+    }
+</script>
+
+
+</body>
+</html>
+

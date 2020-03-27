@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Kinobiletter</title>
+
+
+
+
+</head>
+<body>
+
+<h1 style=" color: olive">Bestilling av kinobiletter</h1><br>
+<div class="container">
+    <div class="row">
+        <div class=" col-xs-2 col-md-4">
+            <h1>Bestilling av kinobiletter</h1>
+            <form class="form">
+                <div class="form-group">
+                    <label for="film"><strong>Velg film:</strong></label>
+                    <select id="film" class="form-control form-control-sm">
+            <option value="" disabled selected hidden> Valg film her(f.eks film1....) </option>
+            <option>Film 1</option>
+            <option>Film 2</option>
+            <option>Film 3</option>
+            <option>Film 4</option>
+            <option>Film 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="antall"><strong>Antall </strong></label>
+                    <input type="text"  class="form-control form-control-sm"  id="antall" />
+                    <div class="text-danger" id="antallFeil"></div>
+                </div>
+                <div class="form-group">
+                    <label for="fornavn"><strong>Fornavn </strong></label>
+                    <input type="text" class="form-control form-control-sm" id="fornavn">
+                    <div class="text-danger" id="fornavnFeil"></div>
+                </div>
+                <div class="form-group">
+                    <label for="etternavn" ><strong>Etternavn </strong></label>
+                    <input type="text" class="form-control form-control-sm" id="etternavn">
+                    <div class="text-danger" id="etternavnFeil"></div>
+                </div>
+                <div class="form-group">
+                    <label for="telefonnr"><strong>Telefonnr</strong></label>
+                    <input type="text" class="form-control form-control-sm" id="telefonnr">
+                    <div class="text-danger" id="telefonnrFeil"></div>
+                </div>
+                <div class="form-group">
+                    <label for="epost"><strong>Epost </strong></label>
+                    <input type="text" class="form-control form-control-sm" id="epost">
+                    <div class="text-danger" id="epostFeil"></div>
+                </div>
+            </form>
+            <button type="button" class="btn btn-primary " onclick="reg()">kjøp billetet</button>
+        </div>
+        <div class="col-xs-4 col-md-8">
+            <h3>Alle billetter</h3>
+            <div id="alleBillettene"></div>
+            <button type="button" class="btn btn-outline-danger btn-sm" onclick="slettAlle()">slett alle billettene</button>
+        </div>
+    </div>
+</div>
+<script type="application/javascript">
+    function hentAlle() {
+        $.get("/hentAlle",function (billett) {
+            visAlle(billett);
+        })
+    }
+    function visAlle(billetter) {
+        let ut = "<table class='table table-striped table-bordered'><tr class='table-primary'>" +
+            "<th>Film</th> <th>Antall</th> <th>fornavn</th><th>etternavn</th><th>telefonnummer</th><th>epost</th></tr>";
+        for (const b of billetter){
+            ut+= "<tr><td>"+b.film+"</td><td>"+b.antall+"</td>";
+            ut+= "<td>"+b.fornavn+"</td> <td>"+b.etternavn+"</td><td>"+b.telefonnr+"</td><td>"+b.epost+"</td></tr>";
+        }
+        ut+="</table>";
+        $("#alleBillettene").html(ut);
+    }
+    function slettAlle() {
+        $.get("/slettAlle",function () {
+            visAlle();
+        });
+    }
+    function valideringInput() {
+        $("#fornavnFeil").html("");
+        $("#etternavnFeil").html("");
+        $("#telefonnrFeil").html("");
+        $("#epostFeil").html("");
+        $("#antallFeil").html("");
+        let feil = false;
+        if($("#fornavn").val()===""){
+            $("#fornavnFeil").html("Må skrive noe inn i fornavnet");
+            feil=true;
+        }
+        if($("#etternavn").val()===""){
+            $("#etternavnFeil").html("Må skrive noe inn i etternavnet");
+            feil=true;
+        }
+        if($("#telefonnr").val()===""){
+            $("#telefonnrFeil").html("Må skrive noe inn i telefonnr");
+            feil=true;
+        }
+        if($("#epost").val()===""){
+            $("#epostFeil").html("Må skrive noe inn i epost");
+            feil=true;
+        }
+        if($("#antall").val()===""){
+            $("#antallFeil").html("Må skrive noe inn i antall");
+            feil=true;
+        }
+        return feil;
+    }
+
+</script>
+
+
+</body>
+</html>
+
